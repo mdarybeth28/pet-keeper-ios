@@ -1,1 +1,0 @@
-{"dependencies":{"@capacitor/core":"^7.4.0","@capacitor/ios":"^7.4.0"},"description":"Pet Keeper iOS — Phase 1 toolchain proof (Capacitor shell + native SwiftUI layer). Not the shipping app yet.","devDependencies":{"@capacitor/cli":"^7.4.0","typescript":"^7.0.2"},"name":"pet-keeper-ios","private":true,"scripts":{"open":"cap open ios","sync":"cap sync ios"},"version":"0.1.0"}
