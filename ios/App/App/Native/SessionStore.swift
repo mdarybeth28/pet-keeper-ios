@@ -20,17 +20,41 @@ final class SessionStore: ObservableObject {
     private var accessToken: String?
     private var accessTokenExpiresAt: Date?
 
+    /// The signed-in account, from the token response's `user`
+    /// object (Supabase Auth returns it on both grants). The id is
+    /// a UUID — it is also the appAccountToken every Apple purchase
+    /// is made under (see SubscriptionStore).
+    private(set) var currentUserID: String?
+    private(set) var currentEmail: String?
+
     var isSignedIn: Bool { state == .signedIn }
+
+    /// The Supabase user id as a UUID, for StoreKit's
+    /// appAccountToken. Identity mapping: Supabase Auth ids are
+    /// UUIDs, so no derivation is needed; a non-UUID id (which
+    /// should never occur) yields nil and purchases are refused
+    /// rather than made under an unlinkable token.
+    var appAccountToken: UUID? {
+        guard let currentUserID else { return nil }
+        return UUID(uuidString: currentUserID)
+    }
+
+    struct AuthUser: Decodable {
+        let id: String
+        let email: String?
+    }
 
     struct TokenResponse: Decodable {
         let accessToken: String
         let refreshToken: String
         let expiresIn: Int
+        let user: AuthUser?
 
         enum CodingKeys: String, CodingKey {
             case accessToken = "access_token"
             case refreshToken = "refresh_token"
             case expiresIn = "expires_in"
+            case user
         }
     }
 
@@ -88,6 +112,8 @@ final class SessionStore: ObservableObject {
         }
         accessToken = nil
         accessTokenExpiresAt = nil
+        currentUserID = nil
+        currentEmail = nil
         KeychainHelper.clearRefreshToken()
         state = .signedOut
     }
@@ -133,6 +159,10 @@ final class SessionStore: ObservableObject {
         let tokens = try JSONDecoder().decode(TokenResponse.self, from: data)
         accessToken = tokens.accessToken
         accessTokenExpiresAt = Date().addingTimeInterval(TimeInterval(tokens.expiresIn))
+        if let user = tokens.user {
+            currentUserID = user.id
+            currentEmail = user.email
+        }
         KeychainHelper.saveRefreshToken(tokens.refreshToken)
         state = .signedIn
     }

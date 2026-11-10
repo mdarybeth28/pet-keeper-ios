@@ -30,6 +30,10 @@
 		B11D0000000000000000000D /* DueNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000D /* DueNotificationScheduler.swift */; };
 		B11D0000000000000000000E /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000E /* AppLock.swift */; };
 		B11D0000000000000000000F /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000F /* MoreView.swift */; };
+		B11D00000000000000000010 /* StoreConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000010 /* StoreConfig.swift */; };
+		B11D00000000000000000011 /* ApprovalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000011 /* ApprovalService.swift */; };
+		B11D00000000000000000012 /* SubscriptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000012 /* SubscriptionStore.swift */; };
+		B11D00000000000000000013 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000013 /* PaywallView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +64,10 @@
 		F11E0000000000000000000D /* DueNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueNotificationScheduler.swift; sourceTree = "<group>"; };
 		F11E0000000000000000000E /* AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLock.swift; sourceTree = "<group>"; };
 		F11E0000000000000000000F /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		F11E00000000000000000010 /* StoreConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreConfig.swift; sourceTree = "<group>"; };
+		F11E00000000000000000011 /* ApprovalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalService.swift; sourceTree = "<group>"; };
+		F11E00000000000000000012 /* SubscriptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStore.swift; sourceTree = "<group>"; };
+		F11E00000000000000000013 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +151,10 @@
 				F11E0000000000000000000D /* DueNotificationScheduler.swift */,
 				F11E0000000000000000000E /* AppLock.swift */,
 				F11E0000000000000000000F /* MoreView.swift */,
+				F11E00000000000000000010 /* StoreConfig.swift */,
+				F11E00000000000000000013 /* PaywallView.swift */,
+				F11E00000000000000000012 /* SubscriptionStore.swift */,
+				F11E00000000000000000011 /* ApprovalService.swift */,
 			);
 			path = Native;
 			sourceTree = "<group>";
@@ -278,6 +290,10 @@
 				B11D0000000000000000000D /* DueNotificationScheduler.swift in Sources */,
 				B11D0000000000000000000E /* AppLock.swift in Sources */,
 				B11D0000000000000000000F /* MoreView.swift in Sources */,
+				B11D00000000000000000010 /* StoreConfig.swift in Sources */,
+				B11D00000000000000000013 /* PaywallView.swift in Sources */,
+				B11D00000000000000000012 /* SubscriptionStore.swift in Sources */,
+				B11D00000000000000000011 /* ApprovalService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
