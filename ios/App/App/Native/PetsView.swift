@@ -64,13 +64,17 @@ struct PetsView: View {
                 .padding()
             } else {
                 List(pets) { pet in
-                    HStack(spacing: 12) {
-                        Text(pet.speciesEmoji).font(.title3)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(pet.name).font(.headline)
-                            Text(pet.subtitle)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                    NavigationLink {
+                        PetDetailView(pet: pet)
+                    } label: {
+                        HStack(spacing: 12) {
+                            Text(pet.speciesEmoji).font(.title3)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(pet.name).font(.headline)
+                                Text(pet.subtitle)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
                 }

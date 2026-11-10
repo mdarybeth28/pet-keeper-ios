@@ -24,6 +24,12 @@
 		B11D00000000000000000007 /* DueSoonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000007 /* DueSoonView.swift */; };
 		B11D00000000000000000008 /* WebTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000008 /* WebTabView.swift */; };
 		B11D00000000000000000009 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000009 /* RootTabView.swift */; };
+		B11D0000000000000000000A /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000A /* Record.swift */; };
+		B11D0000000000000000000B /* RecordsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000B /* RecordsService.swift */; };
+		B11D0000000000000000000C /* PetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000C /* PetDetailView.swift */; };
+		B11D0000000000000000000D /* DueNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000D /* DueNotificationScheduler.swift */; };
+		B11D0000000000000000000E /* AppLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000E /* AppLock.swift */; };
+		B11D0000000000000000000F /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000000F /* MoreView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +54,12 @@
 		F11E00000000000000000007 /* DueSoonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueSoonView.swift; sourceTree = "<group>"; };
 		F11E00000000000000000008 /* WebTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebTabView.swift; sourceTree = "<group>"; };
 		F11E00000000000000000009 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		F11E0000000000000000000A /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		F11E0000000000000000000B /* RecordsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsService.swift; sourceTree = "<group>"; };
+		F11E0000000000000000000C /* PetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetailView.swift; sourceTree = "<group>"; };
+		F11E0000000000000000000D /* DueNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DueNotificationScheduler.swift; sourceTree = "<group>"; };
+		F11E0000000000000000000E /* AppLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLock.swift; sourceTree = "<group>"; };
+		F11E0000000000000000000F /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +137,12 @@
 				F11E00000000000000000007 /* DueSoonView.swift */,
 				F11E00000000000000000008 /* WebTabView.swift */,
 				F11E00000000000000000009 /* RootTabView.swift */,
+				F11E0000000000000000000A /* Record.swift */,
+				F11E0000000000000000000B /* RecordsService.swift */,
+				F11E0000000000000000000C /* PetDetailView.swift */,
+				F11E0000000000000000000D /* DueNotificationScheduler.swift */,
+				F11E0000000000000000000E /* AppLock.swift */,
+				F11E0000000000000000000F /* MoreView.swift */,
 			);
 			path = Native;
 			sourceTree = "<group>";
@@ -254,6 +272,12 @@
 				B11D00000000000000000007 /* DueSoonView.swift in Sources */,
 				B11D00000000000000000008 /* WebTabView.swift in Sources */,
 				B11D00000000000000000009 /* RootTabView.swift in Sources */,
+				B11D0000000000000000000A /* Record.swift in Sources */,
+				B11D0000000000000000000B /* RecordsService.swift in Sources */,
+				B11D0000000000000000000C /* PetDetailView.swift in Sources */,
+				B11D0000000000000000000D /* DueNotificationScheduler.swift in Sources */,
+				B11D0000000000000000000E /* AppLock.swift in Sources */,
+				B11D0000000000000000000F /* MoreView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
