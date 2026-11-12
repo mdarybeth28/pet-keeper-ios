@@ -74,10 +74,11 @@ struct SignInView: View {
                     note = nil
                     Task {
                         let cleanEmail = email.trimmingCharacters(in: .whitespaces)
+                        let pw = password
                         if mode == .signIn {
-                            await session.signIn(email: cleanEmail, password: <redacted>
+                            await session.signIn(email: cleanEmail, password: pw)
                         } else {
-                            await session.signUp(email: cleanEmail, password: <redacted>
+                            await session.signUp(email: cleanEmail, password: pw)
                         }
                         isWorking = false
                     }
