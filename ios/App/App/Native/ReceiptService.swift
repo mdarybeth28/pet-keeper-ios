@@ -114,13 +114,14 @@ enum ReceiptService {
             insert.setValue(value, forHTTPHeaderField: key)
         }
         insert.setValue("return=minimal", forHTTPHeaderField: "Prefer")
-        insert.httpBody = try JSONSerialization.data(withJSONObject: [
+        var row: [String: Any] = [
             "user_id": userId,
-            "user_email": userEmail ?? NSNull(),
             "pet_name": petName,
-            "note": note.isEmpty ? NSNull() : note,
             "photo_path": path,
-        ])
+        ]
+        if let userEmail { row["user_email"] = userEmail } else { row["user_email"] = NSNull() }
+        row["note"] = note.isEmpty ? NSNull() : note
+        insert.httpBody = try JSONSerialization.data(withJSONObject: row)
         let (inData, inResponse) = try await URLSession.shared.data(for: insert)
         let inStatus = (inResponse as? HTTPURLResponse)?.statusCode ?? 0
         guard inStatus == 201 else {
