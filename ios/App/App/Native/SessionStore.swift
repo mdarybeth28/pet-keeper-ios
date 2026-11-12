@@ -101,6 +101,74 @@ final class SessionStore: ObservableObject {
         }
     }
 
+    /// Create a brand-new account — the web app's sign-up door
+    /// (POST /auth/v1/signup). This project's sign-ups come back
+    /// with a session (email confirmation is off — the web sign-up
+    /// lands a new person straight on the waiting screen), so a
+    /// successful create signs the person in and the approval gate
+    /// takes it from there, exactly like the web.
+    func signUp(email: String, password: String) async {
+        lastError = nil
+        var request = URLRequest(url: SupabaseConfig.signupURL)
+        request.httpMethod = "POST"
+        for (key, value) in SupabaseConfig.baseHeaders() {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        request.httpBody = try? JSONSerialization.data(withJSONObject: [
+            "email": email,
+            "password": password,
+        ])
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+            guard status == 200 else {
+                let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.bestMessage
+                lastError = message ?? "That sign-up didn't go through (HTTP \(status))."
+                state = .signedOut
+                return
+            }
+            if let tokens = try? JSONDecoder().decode(TokenResponse.self, from: data),
+               !tokens.accessToken.isEmpty {
+                adopt(tokens: tokens)
+            } else {
+                // No session in the reply (a project with email
+                // confirmation switched on answers this way).
+                lastError = "Your account is made. Check your email to confirm it, then sign in here."
+                state = .signedOut
+            }
+        } catch {
+            lastError = error.localizedDescription
+            state = .signedOut
+        }
+    }
+
+    /// The "forgot password" door — the web app's
+    /// resetPasswordForEmail, sending the person to the website to
+    /// pick the new password. Returns true when the email went out.
+    func sendPasswordReset(email: String) async -> Bool {
+        var components = URLComponents(url: SupabaseConfig.recoverURL, resolvingAgainstBaseURL: false)!
+        components.queryItems = [URLQueryItem(name: "redirect_to", value: "https://yourpetkeeper.com")]
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        for (key, value) in SupabaseConfig.baseHeaders() {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        request.httpBody = try? JSONSerialization.data(withJSONObject: ["email": email])
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+            if status != 200 {
+                let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.bestMessage
+                lastError = message ?? "That reset email didn't go out (HTTP \(status))."
+                return false
+            }
+            return true
+        } catch {
+            lastError = error.localizedDescription
+            return false
+        }
+    }
+
     func signOut() async {
         if let accessToken {
             var request = URLRequest(url: SupabaseConfig.logoutURL)
@@ -157,6 +225,12 @@ final class SessionStore: ObservableObject {
             ])
         }
         let tokens = try JSONDecoder().decode(TokenResponse.self, from: data)
+        adopt(tokens: tokens)
+    }
+
+    /// Take a fresh token set on board — the one place the session
+    /// state changes in response to the auth doors.
+    private func adopt(tokens: TokenResponse) {
         accessToken = tokens.accessToken
         accessTokenExpiresAt = Date().addingTimeInterval(TimeInterval(tokens.expiresIn))
         if let user = tokens.user {

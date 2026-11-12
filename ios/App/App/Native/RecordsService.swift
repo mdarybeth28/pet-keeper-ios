@@ -45,3 +45,79 @@ enum RecordsService {
         return try JSONDecoder().decode([Record].self, from: data)
     }
 }
+
+/// The write half of the records door — the same rows the web
+/// app's saveRecord() builds, the receipt review's bulk insert,
+/// and deleteRecord(). Records carry no timestamps (the web app
+/// never sets one), so none are sent.
+extension RecordsService {
+    /// The row both the insert and the update send.
+    static func recordRow(ownerId: String, petId: String, kind: String,
+                          title: String, dateGiven: String?, nextDue: String?,
+                          notes: String) -> [String: Any] {
+        let trimmedNotes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        return [
+            "owner_id": ownerId,
+            "pet_id": petId,
+            "kind": kind,
+            "title": title.trimmingCharacters(in: .whitespacesAndNewlines),
+            "date_given": dateGiven ?? NSNull(),
+            "next_due": nextDue ?? NSNull(),
+            "notes": trimmedNotes.isEmpty ? NSNull() : trimmedNotes,
+        ]
+    }
+
+    static func createRecord(accessToken: String, row: [String: Any]) async throws {
+        try await insertRecords(accessToken: accessToken, rows: [row])
+    }
+
+    /// Insert several rows at once — the receipt review saves all
+    /// its kept rows in one call, like the web app does.
+    static func insertRecords(accessToken: String, rows: [[String: Any]]) async throws {
+        guard !rows.isEmpty else { return }
+        var request = URLRequest(url: SupabaseConfig.restURL("records"))
+        request.httpMethod = "POST"
+        for (key, value) in SupabaseConfig.baseHeaders(accessToken: accessToken) {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        request.setValue("return=minimal", forHTTPHeaderField: "Prefer")
+        request.httpBody = try JSONSerialization.data(withJSONObject: rows)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        guard status == 201 else {
+            throw PetsService.serviceError(data: data, status: status, fallback: "Those records didn't save (HTTP \(status)).")
+        }
+    }
+
+    static func updateRecord(accessToken: String, recordId: String, row: [String: Any]) async throws {
+        var components = URLComponents(url: SupabaseConfig.restURL("records"), resolvingAgainstBaseURL: false)!
+        components.queryItems = [URLQueryItem(name: "id", value: "eq.\(recordId)")]
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "PATCH"
+        for (key, value) in SupabaseConfig.baseHeaders(accessToken: accessToken) {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        request.setValue("return=minimal", forHTTPHeaderField: "Prefer")
+        request.httpBody = try JSONSerialization.data(withJSONObject: row)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        guard status == 200 || status == 204 else {
+            throw PetsService.serviceError(data: data, status: status, fallback: "Those changes didn't save (HTTP \(status)).")
+        }
+    }
+
+    static func deleteRecord(accessToken: String, recordId: String) async throws {
+        var components = URLComponents(url: SupabaseConfig.restURL("records"), resolvingAgainstBaseURL: false)!
+        components.queryItems = [URLQueryItem(name: "id", value: "eq.\(recordId)")]
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "DELETE"
+        for (key, value) in SupabaseConfig.baseHeaders(accessToken: accessToken) {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        guard status == 200 || status == 204 else {
+            throw PetsService.serviceError(data: data, status: status, fallback: "That record couldn't be removed (HTTP \(status)).")
+        }
+    }
+}

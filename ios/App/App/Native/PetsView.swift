@@ -1,15 +1,18 @@
 import SwiftUI
 
-/// The Pets tab — the Phase 1 proof screen. Reads the REAL `pets`
-/// table for the signed-in account and shows every state honestly:
-/// restoring, signed out (the sign-in form), loading, error with the
-/// server's words, genuinely empty, and the list itself. There is no
-/// sample data anywhere in this screen.
+/// The Pets tab. Reads the REAL `pets` table for the signed-in
+/// account and shows every state honestly: restoring, signed out
+/// (the sign-in form), loading, error with the server's words,
+/// genuinely empty — with the add-a-pet door right there — and
+/// the list itself. There is no sample data anywhere in this
+/// screen.
 struct PetsView: View {
     @EnvironmentObject private var session: SessionStore
     @State private var pets: [Pet] = []
     @State private var isLoading = false
     @State private var loadError: String?
+    @State private var showAddPet = false
+    @State private var hasLoadedOnce = false
 
     var body: some View {
         NavigationStack {
@@ -18,6 +21,13 @@ struct PetsView: View {
                 .toolbar {
                     if session.isSignedIn {
                         ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                showAddPet = true
+                            } label: {
+                                Label("Add a pet", systemImage: "plus.circle.fill")
+                            }
+                        }
+                        ToolbarItem(placement: .navigationBarLeading) {
                             Button("Sign out") {
                                 Task { await session.signOut() }
                             }
@@ -25,8 +35,21 @@ struct PetsView: View {
                     }
                 }
         }
+        .sheet(isPresented: $showAddPet) {
+            PetFormView(existing: nil) { _ in
+                Task { await load() }
+            }
+            .environmentObject(session)
+        }
         .task(id: session.state) {
             if session.state == .signedIn { await load() }
+        }
+        .onAppear {
+            // Coming back from a pet's page (where pets can be
+            // added, edited, or removed) re-reads the list.
+            if hasLoadedOnce && session.state == .signedIn {
+                Task { await load() }
+            }
         }
     }
 
@@ -38,9 +61,9 @@ struct PetsView: View {
         case .signedOut:
             SignInView()
         case .signedIn:
-            if isLoading {
+            if isLoading && pets.isEmpty {
                 ProgressView("Loading your pets…")
-            } else if let loadError {
+            } else if let loadError, pets.isEmpty {
                 VStack(spacing: 12) {
                     Text("Something went wrong")
                         .font(.headline)
@@ -52,23 +75,28 @@ struct PetsView: View {
                 }
                 .padding()
             } else if pets.isEmpty {
-                VStack(spacing: 10) {
-                    Text("🐾").font(.largeTitle)
+                VStack(spacing: 12) {
+                    Text("🐾").font(.system(size: 52))
                     Text("No pets yet")
                         .font(.headline)
-                    Text("Pets on your account will show up here. You can add pets in the web app today; adding them here arrives in a later phase.")
+                    Text("Add your first pet and every shot, visit and due date has a home.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
+                    Button("Add a pet") { showAddPet = true }
+                        .buttonStyle(PrimaryButtonStyle())
+                        .padding(.horizontal, 40)
                 }
                 .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Theme.page)
             } else {
                 List(pets) { pet in
                     NavigationLink {
                         PetDetailView(pet: pet)
                     } label: {
                         HStack(spacing: 12) {
-                            Text(pet.speciesEmoji).font(.title3)
+                            Text(pet.speciesEmoji).font(.title)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(pet.name).font(.headline)
                                 Text(pet.subtitle)
@@ -76,8 +104,12 @@ struct PetsView: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
+                        .padding(.vertical, 4)
                     }
+                    .listRowBackground(Color.white)
                 }
+                .scrollContentBackground(.hidden)
+                .background(Theme.page)
                 .refreshable { await load() }
             }
         }
@@ -93,6 +125,7 @@ struct PetsView: View {
         }
         do {
             pets = try await PetsService.fetchPets(accessToken: token)
+            hasLoadedOnce = true
         } catch {
             loadError = error.localizedDescription
         }

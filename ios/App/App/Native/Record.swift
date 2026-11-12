@@ -118,6 +118,16 @@ struct Record: Codable, Identifiable, Equatable {
         return "Due \(Self.formatDay(nextDue))"
     }
 
+    /// A Date as the database's "yyyy-MM-dd" string — the write
+    /// direction of parseDay, for the forms.
+    static func isoString(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: date)
+    }
+
     /// The web app's `fmtD()`: "Jan 5, 2027" style, or "" when the
     /// string does not parse.
     static func formatDay(_ string: String?) -> String {
