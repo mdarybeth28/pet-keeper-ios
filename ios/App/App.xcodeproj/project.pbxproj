@@ -34,6 +34,13 @@
 		B11D00000000000000000011 /* ApprovalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000011 /* ApprovalService.swift */; };
 		B11D00000000000000000012 /* SubscriptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000012 /* SubscriptionStore.swift */; };
 		B11D00000000000000000013 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000013 /* PaywallView.swift */; };
+		B11D00000000000000000014 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000014 /* Theme.swift */; };
+		B11D00000000000000000015 /* PetFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000015 /* PetFormView.swift */; };
+		B11D00000000000000000016 /* RecordFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000016 /* RecordFormView.swift */; };
+		B11D00000000000000000017 /* ReceiptService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000017 /* ReceiptService.swift */; };
+		B11D00000000000000000018 /* ReceiptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000018 /* ReceiptView.swift */; };
+		B11D00000000000000000019 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00000000000000000019 /* SummaryView.swift */; };
+		B11D0000000000000000001A /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E0000000000000000001A /* FeedbackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +75,13 @@
 		F11E00000000000000000011 /* ApprovalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApprovalService.swift; sourceTree = "<group>"; };
 		F11E00000000000000000012 /* SubscriptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionStore.swift; sourceTree = "<group>"; };
 		F11E00000000000000000013 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		F11E00000000000000000014 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		F11E00000000000000000015 /* PetFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetFormView.swift; sourceTree = "<group>"; };
+		F11E00000000000000000016 /* RecordFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordFormView.swift; sourceTree = "<group>"; };
+		F11E00000000000000000017 /* ReceiptService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptService.swift; sourceTree = "<group>"; };
+		F11E00000000000000000018 /* ReceiptView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptView.swift; sourceTree = "<group>"; };
+		F11E00000000000000000019 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		F11E0000000000000000001A /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +167,13 @@
 				F11E0000000000000000000F /* MoreView.swift */,
 				F11E00000000000000000010 /* StoreConfig.swift */,
 				F11E00000000000000000013 /* PaywallView.swift */,
+				F11E00000000000000000014 /* Theme.swift */,
+				F11E00000000000000000015 /* PetFormView.swift */,
+				F11E00000000000000000016 /* RecordFormView.swift */,
+				F11E00000000000000000017 /* ReceiptService.swift */,
+				F11E00000000000000000018 /* ReceiptView.swift */,
+				F11E00000000000000000019 /* SummaryView.swift */,
+				F11E0000000000000000001A /* FeedbackView.swift */,
 				F11E00000000000000000012 /* SubscriptionStore.swift */,
 				F11E00000000000000000011 /* ApprovalService.swift */,
 			);
@@ -292,6 +313,13 @@
 				B11D0000000000000000000F /* MoreView.swift in Sources */,
 				B11D00000000000000000010 /* StoreConfig.swift in Sources */,
 				B11D00000000000000000013 /* PaywallView.swift in Sources */,
+				B11D00000000000000000014 /* Theme.swift in Sources */,
+				B11D00000000000000000015 /* PetFormView.swift in Sources */,
+				B11D00000000000000000016 /* RecordFormView.swift in Sources */,
+				B11D00000000000000000017 /* ReceiptService.swift in Sources */,
+				B11D00000000000000000018 /* ReceiptView.swift in Sources */,
+				B11D00000000000000000019 /* SummaryView.swift in Sources */,
+				B11D0000000000000000001A /* FeedbackView.swift in Sources */,
 				B11D00000000000000000012 /* SubscriptionStore.swift in Sources */,
 				B11D00000000000000000011 /* ApprovalService.swift in Sources */,
 			);
@@ -424,7 +452,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -447,7 +475,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
 				DEVELOPMENT_TEAM = C59T552W7P;
 				PROVISIONING_PROFILE_SPECIFIER = "Pet Keeper App Store";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
