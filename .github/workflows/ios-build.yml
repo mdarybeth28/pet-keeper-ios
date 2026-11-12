@@ -93,16 +93,18 @@ jobs:
           echo "$PROFILE_B64" | base64 --decode > "$HOME/Library/MobileDevice/Provisioning Profiles/PetKeeper.mobileprovision"
 
       - name: Archive SIGNED (Apple Distribution)
+        # Signing settings live in the App target's Release config in
+        # project.pbxproj (Manual + Apple Distribution + the
+        # "Pet Keeper App Store" profile). They must NOT be passed on
+        # the command line: global overrides also hit the CocoaPods
+        # targets, which reject provisioning profiles outright
+        # ("Capacitor does not support provisioning profiles", exit 65).
         run: |
           xcodebuild \
             -workspace ios/App/App.xcworkspace \
             -scheme App \
             -configuration Release \
             -archivePath "$RUNNER_TEMP/PetKeeper.xcarchive" \
-            DEVELOPMENT_TEAM=C59T552W7P \
-            CODE_SIGN_STYLE=Manual \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
-            PROVISIONING_PROFILE_SPECIFIER="Pet Keeper App Store" \
             archive
 
       - name: Export + upload to TestFlight
