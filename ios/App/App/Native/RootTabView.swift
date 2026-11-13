@@ -44,6 +44,7 @@ struct RootTabView: View {
         .environmentObject(appLock)
         .environmentObject(approval)
         .environmentObject(subscriptions)
+        .preferredColorScheme(.light)
         .task {
             await session.restore()
         }
